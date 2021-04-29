@@ -46,9 +46,64 @@ const userCtrl = {
     }
   },
 
+  login: async (req, res) => {
+    try {
+      const { email, password } = req.body;
+
+      const user = await Users.findOne({ email });
+
+      if (!user) return res.status(404).json({ msg: 'User does not exits' });
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return res.status(400).json({ msg: 'Invalid password' });
+
+      // if login successfully => Create a access token and refresh token
+
+      const accessToken = createAccessToken({ id: user._id });
+      const refreshToken = createRefreshToken({ id: user._id });
+
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        path: '/user/refresh_token',
+      });
+
+      // Done
+      res.json({
+        // msg: 'Register Successfully',
+        accessToken,
+      });
+
+      // res.json({ msg: 'login successfully' });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
+
+  logout: async (req, res) => {
+    try {
+      res.clearCookie('refreshtoken', { path: '/user/refresh_token' });
+      return res.json({ msg: 'logout' });
+    } catch (err) {}
+  },
+
   refreshToken: (req, res) => {
-    const rf_token = req.cookies.refreshToken;
-    res.json({ rf_token });
+    try {
+      const rf_token = req.cookies.refreshToken;
+
+      if (!rf_token)
+        return res.status(400).json({ msg: 'Please login or register' });
+
+      jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if (err)
+          return res.status(400).json({ msg: 'Please login or register' });
+
+        const accessToken = createAccessToken({ id: user.id });
+
+        res.json({ accessToken });
+      });
+    } catch (err) {
+      return res.status(500).json({ msg: err.message });
+    }
   },
 };
 
