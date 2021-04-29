@@ -29,6 +29,12 @@ const userCtrl = {
 
       // Create jsonwebtoken to authentication
       const accessToken = createAccessToken({ id: newUser._id });
+      const refreshToken = createRefreshToken({ id: newUser._id });
+
+      res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        path: '/user/refresh_token',
+      });
 
       // Done
       res.json({
@@ -39,10 +45,18 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+
+  refreshToken: (req, res) => {
+    const rf_token = req.cookies.refreshtoken;
+    res.json({ rf_token });
+  },
 };
 
 const createAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+};
+const createRefreshToken = (user) => {
+  return jwt.sign(user, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 };
 
 module.exports = userCtrl;
