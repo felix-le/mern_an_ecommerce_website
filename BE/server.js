@@ -17,6 +17,10 @@ app.use(
   })
 );
 
+// Routes
+
+app.use('/user', require('./routes/userRouter'));
+
 // Connect to mongodb server
 
 const URI = process.env.MONGODB_URL;
