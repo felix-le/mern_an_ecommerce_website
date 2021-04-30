@@ -22,6 +22,7 @@ app.use(
 app.use('/user', require('./routes/userRouter'));
 app.use('/api', require('./routes/categoryRouter'));
 app.use('/api', require('./routes/uploadImg'));
+app.use('/api', require('./routes/productRouter'));
 
 // Connect to mongodb server
 

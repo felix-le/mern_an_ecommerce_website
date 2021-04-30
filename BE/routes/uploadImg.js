@@ -55,6 +55,7 @@ router.post('/destroy', auth, authAmin, (req, res) => {
 
     cloudinary.v2.uploader.destroy(public_id, async (err, result) => {
       if (err) throw err;
+      removeTmp(file.tempFilePath);
 
       res.json({ msg: 'The image has been deleted' });
     });
