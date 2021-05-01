@@ -23,7 +23,7 @@ app.use('/user', require('./routes/userRouter'));
 app.use('/api', require('./routes/categoryRouter'));
 app.use('/api', require('./routes/uploadImg'));
 app.use('/api', require('./routes/productRouter'));
-
+app.use('/api', require('./routes/readCsvRouter'));
 // Connect to mongodb server
 
 const URI = process.env.MONGODB_URL;

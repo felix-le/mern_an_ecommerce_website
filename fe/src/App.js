@@ -11,20 +11,21 @@ function App() {
   const [rawData, setRawData] = useState([]);
   console.log('🚀 ~ file: App.js ~ line 15 ~ App ~ rawData', rawData);
 
-  const readSheetBook = async () => {
-    const workbook = await XLSX.readFile(product);
-    let worksheets = {};
-    for (const sheetName of workbook.SheetNames) {
-      worksheets[sheetName] = XLSX.utils.sheet_to_json(
-        workbook.Sheet[sheetName]
-      );
-    }
-    setRawData(worksheets);
-  };
+  // const readSheetBook = async () => {
+  //   const workbook = XLSX.read(fs.readFileSync('./product.xlsx'));
+  //   // const workbook =  XLSX.read(fs.readFileSync((product));
+  //   let worksheets = {};
+  //   for (const sheetName of workbook.SheetNames) {
+  //     worksheets[sheetName] = XLSX.utils.sheet_to_json(
+  //       workbook.Sheet[sheetName]
+  //     );
+  //   }
+  //   setRawData(worksheets);
+  // };
 
-  useEffect(() => {
-    readSheetBook();
-  }, []);
+  // useEffect(() => {
+  //   readSheetBook();
+  // }, []);
 
   return (
     <DataProvider>
