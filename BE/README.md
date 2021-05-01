@@ -6,3 +6,6 @@
    > use api link for call api
 4. controllers
    > control the data / res
+
+**start**
+yarn start
