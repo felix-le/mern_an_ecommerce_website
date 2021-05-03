@@ -27,6 +27,6 @@ const getDataCsv = (link) => {
     );
   }
 
-  return JSON.stringify(worksheets.Sheet1);
+  return worksheets.Sheet1;
 };
 module.exports = readCsvCtrl;
