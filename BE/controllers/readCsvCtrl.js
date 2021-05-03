@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const fs = require('fs');
 const XLSX = require('xlsx');
-const ItemCsv = require('../models/readCsvModel');
+// const ItemCsv = require('../models/readCsvModel');
 
 const readCsvCtrl = {
   postItemCsv: async (req, res) => {
